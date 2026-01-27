@@ -1,0 +1,32 @@
+{
+  "name": "e2e-testing-kit",
+  "version": "1.0.0",
+  "description": "Reusable E2E testing kit with Playwright, Allure, and PDF reports",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "report": "npm run allure:generate && npm run allure:open",
+    "report:pdf": "node scripts/generate-pdf-report.cjs",
+    "report:all": "npm run allure:generate && npm run report:pdf",
+    "clean": "rimraf allure-results allure-report playwright-report test-results test-report.pdf",
+    "test:report": "npm run clean && npm run test && npm run report:all"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.5",
+    "pdfkit": "^0.17.2",
+    "rimraf": "^5.0.0"
+  },
+  "keywords": ["testing", "e2e", "playwright", "allure", "pdf-report"],
+  "author": "",
+  "license": "MIT"
+}
