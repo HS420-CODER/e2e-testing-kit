@@ -17,8 +17,88 @@ const path = require('path');
 
 // Configuration
 const ALLURE_RESULTS_DIR = path.join(__dirname, '..', 'allure-results');
-const OUTPUT_PDF = process.env.OUTPUT_FILE || path.join(__dirname, '..', 'test-report.pdf');
-const REPORT_TITLE = process.env.REPORT_TITLE || 'E2E Test Report';
+
+/**
+ * Extract page/suite name from Allure results for naming the report
+ */
+function getPageName() {
+  if (!fs.existsSync(ALLURE_RESULTS_DIR)) {
+    return 'unknown';
+  }
+
+  const files = fs.readdirSync(ALLURE_RESULTS_DIR);
+  for (const file of files) {
+    if (file.endsWith('-result.json')) {
+      try {
+        const content = fs.readFileSync(path.join(ALLURE_RESULTS_DIR, file), 'utf8');
+        const data = JSON.parse(content);
+
+        // Try to get suite name from labels (prefer subSuite which has the describe block name)
+        if (data.labels) {
+          const subSuiteLabel = data.labels.find(l => l.name === 'subSuite');
+          if (subSuiteLabel && subSuiteLabel.value) {
+            return subSuiteLabel.value
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+          }
+
+          // Fallback to suite (test file name)
+          const suiteLabel = data.labels.find(l => l.name === 'suite');
+          if (suiteLabel && suiteLabel.value) {
+            return suiteLabel.value
+              .replace(/\.spec\.(ts|js)$/i, '') // Remove .spec.ts/.spec.js
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+          }
+        }
+
+        // Fallback: extract from test file path if available
+        if (data.labels) {
+          const testLabel = data.labels.find(l => l.name === 'testClass');
+          if (testLabel && testLabel.value) {
+            const match = testLabel.value.match(/([^/\\]+)\.spec\./);
+            if (match) {
+              return match[1];
+            }
+          }
+        }
+      } catch (e) {
+        // Continue to next file
+      }
+    }
+  }
+  return 'tests';
+}
+
+/**
+ * Extract site name from BASE_URL for naming the report
+ */
+function getSiteName() {
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+  try {
+    const url = new URL(baseUrl);
+    // Get hostname and clean it up (remove www., port, etc.)
+    let siteName = url.hostname
+      .replace(/^www\./, '')
+      .replace(/:\d+$/, '');
+
+    // Convert to filename-safe format
+    return siteName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  } catch (e) {
+    return 'site';
+  }
+}
+
+const SITE_NAME = process.env.SITE_NAME || getSiteName();
+const PAGE_NAME = process.env.PAGE_NAME || getPageName();
+const REPORT_TYPE = process.env.REPORT_TYPE || 'e2e-report';
+const OUTPUT_PDF = process.env.OUTPUT_FILE || path.join(__dirname, '..', `${SITE_NAME}-${PAGE_NAME}-${REPORT_TYPE}.pdf`);
+const REPORT_TITLE = process.env.REPORT_TITLE || `${SITE_NAME.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} - ${PAGE_NAME.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} E2E Test Report`;
 
 // Colors
 const COLORS = {
@@ -273,6 +353,9 @@ function generatePDF() {
 
   stream.on('finish', () => {
     console.log(`\n✅ PDF Report generated: ${OUTPUT_PDF}`);
+    console.log(`   Site: ${SITE_NAME}`);
+    console.log(`   Page/Suite: ${PAGE_NAME}`);
+    console.log(`   Report Type: ${REPORT_TYPE}`);
     console.log(`\n📊 Summary:`);
     console.log(`   Total Tests: ${total}`);
     console.log(`   Passed: ${passed}`);

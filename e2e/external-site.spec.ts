@@ -12,8 +12,14 @@ import { test, expect } from '@playwright/test';
 
 test.describe('External Site Tests', () => {
 
+  // Add delay between tests to avoid rate limiting
+  test.afterEach(async () => {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  });
+
   test('TC-001: Homepage loads successfully', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(1000);
     await expect(page).toHaveTitle(/.+/); // Has any title
     await expect(page.locator('body')).toBeVisible();
   });

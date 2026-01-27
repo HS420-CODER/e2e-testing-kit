@@ -54,6 +54,29 @@ Edit `playwright.config.ts`:
 - `testDir` - Test directory (default: ./e2e)
 - `projects` - Browsers to test
 
+## PDF Report Naming
+
+Reports are automatically named based on the site, tested page/suite, and report type:
+- Format: `{site-name}-{page-name}-{report-type}.pdf`
+- Example: `localhost-external-site-tests-e2e-report.pdf`
+
+The site name is extracted from BASE_URL, and the page name from Allure results (describe block or test file).
+
+Override with environment variables:
+```bash
+# Test against a specific site
+BASE_URL=https://example.com npm run test:e2e
+npm run report:pdf
+# Output: example-com-external-site-tests-e2e-report.pdf
+
+# Custom naming
+SITE_NAME=prod PAGE_NAME=login REPORT_TYPE=smoke-test npm run report:pdf
+# Output: prod-login-smoke-test.pdf
+
+OUTPUT_FILE=custom-report.pdf npm run report:pdf
+# Output: custom-report.pdf
+```
+
 ## When User Asks to Test
 
 1. Check if dependencies installed: `npm list @playwright/test`

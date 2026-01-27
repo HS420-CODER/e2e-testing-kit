@@ -47,7 +47,17 @@ export default defineConfig({
 
     // Viewport size
     viewport: { width: 1280, height: 720 },
+
+    // Avoid bot detection
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+
+    // Add delay between actions
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
   },
+
+  // Run tests sequentially to avoid rate limiting
+  workers: 1,
 
   // Browser projects
   projects: [
