@@ -194,6 +194,28 @@ Or use environment variable:
 BASE_URL=http://localhost:8080 npm run test:e2e
 ```
 
+### 🌐 No Source Code Required!
+
+You can test **any website** using just its URL. No access to source code needed!
+
+```bash
+# Test any production site
+BASE_URL=https://your-app.com npm run test:e2e
+
+# Test staging environment
+BASE_URL=https://staging.example.com npm run test:e2e
+
+# Test any public website
+BASE_URL=https://google.com npm run test:e2e
+```
+
+**Use cases:**
+- ✅ Test production deployments
+- ✅ Monitor external services
+- ✅ QA third-party integrations
+- ✅ Verify competitor features
+- ✅ Check site uptime & performance
+
 ## Writing Tests
 
 Create test files in `e2e/` directory:
