@@ -27,33 +27,155 @@ npx playwright install
 - **Allure Reports** - Beautiful interactive HTML reports
 - **PDF Export** - Professional PDF reports with screenshots
 - **Multi-browser** - Chrome, Firefox, Safari, Mobile
+- **Claude Code Ready** - Built-in AI integration
 - **Easy Setup** - One command to add to any project
+
+---
+
+## 🤖 Using with Claude Code
+
+This kit is designed to work seamlessly with [Claude Code](https://claude.ai/code).
+
+### Step 1: Add to Your Project
+
+Open Claude Code in your project and say:
+
+```
+Add E2E testing to this project using the testing kit from github.com/HS420-CODER/e2e-testing-kit
+```
+
+Or manually:
+
+```bash
+npx degit HS420-CODER/e2e-testing-kit e2e-testing
+npm install -D @playwright/test allure-playwright allure-commandline pdfkit
+npx playwright install
+```
+
+### Step 2: Talk to Claude Code
+
+Just ask naturally! Here are example prompts:
+
+| What You Want | What to Say |
+|---------------|-------------|
+| Run tests | *"Run the E2E tests"* |
+| See results | *"Show me the test results"* |
+| HTML report | *"Generate an Allure report"* |
+| PDF report | *"Create a PDF test report"* |
+| Write tests | *"Create E2E tests for the login page"* |
+| Test specific feature | *"Write tests for the shopping cart"* |
+| Debug failures | *"Why is the checkout test failing?"* |
+| Add more tests | *"Add tests for form validation"* |
+
+### Step 3: Example Conversations
+
+**Creating Tests:**
+```
+You: Create E2E tests for the user registration page at /signup
+
+Claude: I'll create comprehensive tests for the registration page...
+        [Creates e2e/registration.spec.ts with multiple test cases]
+```
+
+**Running Tests:**
+```
+You: Run the tests and show me the results
+
+Claude: Running E2E tests...
+        ✓ 12 passed (15.2s)
+
+        All tests passed! Would you like me to generate a report?
+```
+
+**Generating Reports:**
+```
+You: Generate a PDF report for the stakeholders
+
+Claude: Generating PDF report...
+        ✅ PDF Report generated: test-report.pdf
+
+        📊 Summary:
+           Total Tests: 12
+           Passed: 12
+           Pass Rate: 100%
+```
+
+### Step 4: Advanced Usage
+
+**Test specific browsers:**
+```
+Run tests only on Chrome and Firefox
+```
+
+**Test specific features:**
+```
+Run only the tests that contain "login" in their name
+```
+
+**Generate all reports:**
+```
+Run tests and generate both HTML and PDF reports
+```
+
+**Debug mode:**
+```
+Run the failing test in debug mode so I can see what's happening
+```
+
+### Included Claude Code Files
+
+```
+.claude/
+├── agents/
+│   └── test-generator.md    # AI agent for writing tests
+└── commands/
+    └── test.md              # Test command definition
+
+CLAUDE.md                    # Instructions for Claude Code
+```
+
+---
 
 ## Quick Start
 
-### Option 1: Copy to New Project
+### Option 1: Using degit (Recommended)
 
 ```bash
-# Copy the testing-kit folder to your project
-cp -r testing-kit your-project/
-
-# Navigate to your project
-cd your-project
+# Download the kit into your project
+npx degit HS420-CODER/e2e-testing-kit e2e-testing
 
 # Install dependencies
 npm install -D @playwright/test allure-playwright allure-commandline pdfkit
 
 # Install browsers
 npx playwright install
+
+# Run your first test
+npm run test:e2e
 ```
 
-### Option 2: Use Setup Script
+### Option 2: Clone Repository
 
 ```bash
-# From your project directory
-node /path/to/testing-kit/scripts/setup.cjs .
+# Clone the repo
+git clone https://github.com/HS420-CODER/e2e-testing-kit.git
 
-# Then install dependencies
+# Copy to your project
+cp -r e2e-testing-kit/* your-project/
+
+# Install dependencies
+cd your-project
+npm install -D @playwright/test allure-playwright allure-commandline pdfkit
+npx playwright install
+```
+
+### Option 3: Use Setup Script
+
+```bash
+# Download and run setup in one command
+curl -sL https://raw.githubusercontent.com/HS420-CODER/e2e-testing-kit/master/scripts/setup.cjs | node - .
+
+# Install dependencies
 npm install -D @playwright/test allure-playwright allure-commandline pdfkit
 npx playwright install
 ```
