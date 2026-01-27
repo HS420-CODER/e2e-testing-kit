@@ -2,6 +2,25 @@
 
 A reusable end-to-end testing kit with Playwright, Allure reports, and PDF export.
 
+[![Playwright](https://img.shields.io/badge/Playwright-1.58-green)](https://playwright.dev/)
+[![Allure](https://img.shields.io/badge/Allure-Report-orange)](https://allurereport.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+## Installation
+
+**One command to add E2E testing to any project:**
+
+```bash
+npx degit HS420-CODER/e2e-testing-kit e2e-testing
+```
+
+Then install dependencies:
+
+```bash
+npm install -D @playwright/test allure-playwright allure-commandline pdfkit
+npx playwright install
+```
+
 ## Features
 
 - **Playwright** - Fast, reliable E2E testing
