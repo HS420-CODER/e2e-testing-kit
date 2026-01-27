@@ -284,6 +284,18 @@ Customize with environment variables:
 REPORT_TITLE="My App Tests" OUTPUT_FILE="my-report.pdf" npm run report:pdf
 ```
 
+## Documentation
+
+Best practices and guides from official sources:
+
+| Guide | Description |
+|-------|-------------|
+| [Playwright Best Practices](docs/playwright-best-practices.md) | Locators, assertions, test isolation |
+| [Page Object Model](docs/page-object-model.md) | POM pattern with examples |
+| [Writing Tests](docs/writing-tests.md) | Test structure, hooks, naming conventions |
+| [Configuration](docs/configuration.md) | Playwright config, reporters, debugging |
+| [Allure Reporting](docs/allure-reporting.md) | Metadata, steps, attachments |
+
 ## Directory Structure
 
 ```
@@ -291,6 +303,12 @@ your-project/
 ├── e2e/                    # Test files
 │   ├── example.spec.ts
 │   └── your-tests.spec.ts
+├── docs/                   # Best practices & guides
+│   ├── playwright-best-practices.md
+│   ├── page-object-model.md
+│   ├── writing-tests.md
+│   ├── configuration.md
+│   └── allure-reporting.md
 ├── specs/                  # Test plans (optional)
 ├── scripts/
 │   └── generate-pdf-report.cjs
@@ -298,7 +316,7 @@ your-project/
 ├── allure-results/         # (generated)
 ├── allure-report/          # (generated)
 ├── playwright-report/      # (generated)
-└── test-report.pdf         # (generated)
+└── *-e2e-report.pdf        # (generated)
 ```
 
 ## CI/CD Integration
