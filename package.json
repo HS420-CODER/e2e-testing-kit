@@ -16,7 +16,7 @@
     "report": "npm run allure:generate && npm run allure:open",
     "report:pdf": "node scripts/generate-pdf-report.cjs",
     "report:all": "npm run allure:generate && npm run report:pdf",
-    "clean": "rimraf allure-results allure-report playwright-report test-results test-report.pdf",
+    "clean": "rimraf allure-results allure-report playwright-report test-results \"*-e2e-report.pdf\" test-report.pdf",
     "test:report": "npm run clean && npm run test && npm run report:all"
   },
   "devDependencies": {
