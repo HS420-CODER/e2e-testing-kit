@@ -30,6 +30,25 @@ npx playwright install
 - **Claude Code Ready** - Built-in AI integration
 - **Easy Setup** - One command to add to any project
 
+## Playwright vs This Kit
+
+This kit **is** Playwright - with extras pre-configured.
+
+| Feature | Playwright (Raw) | E2E Testing Kit |
+|---------|------------------|-----------------|
+| Test runner | Yes | Yes (same) |
+| Browser automation | Yes | Yes (same) |
+| HTML report | Basic | Allure (richer) |
+| PDF reports | No | Yes |
+| Pre-configured | No | Yes |
+| Allure integration | Manual setup | Ready to use |
+| Example tests | No | Yes |
+| Documentation | External | Included |
+
+**Use raw Playwright** when you want minimal setup and full control.
+
+**Use this kit** when you need professional reports (Allure + PDF), faster setup, or are testing external sites.
+
 ---
 
 ## 🤖 Using with Claude Code
