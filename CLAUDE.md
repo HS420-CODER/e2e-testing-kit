@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code for working with this E2E testing kit.
 
+## IMPORTANT: Use Playwright CLI, NOT Playwright MCP
+
+**NEVER use Playwright MCP server tools** (`browser_snapshot`, `browser_click`, `browser_navigate`, etc.) in this project. Always use the **Playwright CLI** instead:
+
+```bash
+npx playwright test                    # Run all tests
+npx playwright test e2e/example.spec.ts # Run specific test file
+npx playwright test --headed           # Run with visible browser
+npx playwright test --ui               # Interactive UI mode
+npx playwright test --debug            # Debug mode (step through)
+npx playwright test --grep "TC-001"    # Run tests matching pattern
+npx playwright codegen <url>           # Record and generate test code
+npx playwright show-report             # Open HTML report
+npx playwright install                 # Install browsers
+npx playwright test --project=chromium # Run in specific browser
+```
+
+The Playwright CLI integrates with this kit's config (`playwright.config.ts`), reporters (Allure, HTML), and project structure. MCP browser tools bypass all of this.
+
 ## Project Overview
 
 Reusable E2E testing kit with:
